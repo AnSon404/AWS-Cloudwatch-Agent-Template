@@ -1,0 +1,39 @@
+{
+	"agent": {
+        "metrics_collection_interval": 60
+    },
+	"metrics": {
+		"namespace": "CWAgent",
+		"metrics_collected": {
+			"Memory": {
+				"measurement": [
+                    {
+                      "name": "% Committed Bytes In Use",
+                      "rename": "MemoryUsedPercent",
+                      "unit": "Percent"
+                    },
+                    {
+                      "name": "Available Bytes",
+                      "rename": "MemoryAvailableByte",
+                      "unit": "Bytes"
+                    }
+				]
+			},
+			"LogicalDisk": {
+				"measurement": [
+                    {
+                      "name": "% Free Space",
+                      "rename": "DiskFreeSpacePercent",
+                      "unit": "Percent"
+                    }
+				],
+				"resources": ["*"]
+			}
+		},
+		"append_dimensions": {
+			"InstanceId": "${aws:InstanceId}",
+			"AutoScalingGroupName": "${aws:AutoScalingGroupName}"
+		},
+		"aggregation_dimensions" : [["AutoScalingGroupName"]]
+	}
+}

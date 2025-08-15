@@ -1,0 +1,48 @@
+{
+    "agent": {
+        "metrics_collection_interval": 60
+    },
+    "metrics": {
+		"namespace": "CWAgent",
+        "metrics_collected": {
+            "disk": {
+                "resources": [
+                    "*"
+                ],
+                "measurement": [
+                    {
+                        "name": "used_percent",
+                        "rename": "DiskUsedPercent",
+                        "unit": "Percent"
+                    }
+                ],
+                "ignore_file_system_types": [
+                  "sysfs",
+                  "proc",
+                  "devtmpfs",
+                  "tmpfs",
+                  "overlay",
+                  "squashfs",
+                  "nsfs",
+                  "vfat",
+                  "cgroup2"
+                ],
+				"drop_device": true
+            },
+            "mem": {
+                "measurement": [
+                    {
+                        "name": "mem_used_percent",
+                        "rename": "MemoryUsedPercent",
+                        "unit": "Percent"
+                    }
+                ]
+            }
+        },
+        "append_dimensions": {
+            "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
+            "InstanceId":"${aws:InstanceId}"
+        },
+        "aggregation_dimensions" : [["AutoScalingGroupName"]]
+    }
+}
